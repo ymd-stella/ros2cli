@@ -15,6 +15,7 @@
 import functools
 import inspect
 import os
+import sys
 import time
 
 
@@ -96,3 +97,13 @@ def before_invocation(func, hook):
             return func(*args, **kwargs)
     wrapper.__signature__ = inspect.signature(func)
     return wrapper
+
+
+def collect_stdin():
+    lines = b''
+    while True:
+        line = sys.stdin.buffer.readline()
+        if not line:
+            break
+        lines += line
+    return lines
